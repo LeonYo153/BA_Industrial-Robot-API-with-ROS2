@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="default">
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    <plugin name="gazebo_ros_factory" filename="libgazebo_ros_factory.so"/>
+    <model name="robco">
+      <pose>0 0 1 0 0 0</pose>
+      <include>
+        <uri>model://robco_description</uri>
+      </include>
+    </model>
+  </world>
+</sdf>

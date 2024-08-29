@@ -1,0 +1,9 @@
+# Default initial positions for robco's ros2_control fake system
+
+initial_positions:
+  drive1_joint: 0
+  drive2_joint: 0
+  drive3_joint: 0
+  drive4_joint: 0
+  drive5_joint: 0
+  drive6_joint: 0

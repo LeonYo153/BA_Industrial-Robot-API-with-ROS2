@@ -1,0 +1,27 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: robco_description
+    relative_path: urdf/demo_robot.xacro
+  srdf:
+    relative_path: config/robco.srdf
+  package_settings:
+    author_name: You Li
+    author_email: leonyo153@gmail.com
+    generated_timestamp: 1721644317
+  control_xacro:
+    command:
+      - position
+      - velocity
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+      - velocity
+    state:
+      - position
+      - velocity

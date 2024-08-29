@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda">
+  <xacro:macro name="handeye" params="connected_to:='' ns:='' rpy:='0 0 0' xyz:='0 0 0' safety_distance:=0">
+    <xacro:unless value="${not connected_to}">
+      <joint name="${ns}_handeye_joint" type="fixed">
+        <parent link="${connected_to}"/>
+        <child link="${ns}_handeye"/>
+        <origin xyz="${xyz}" rpy="${rpy}"/>
+      </joint>
+    </xacro:unless>
+    <link name="${ns}_handeye">
+      <visual>
+        <geometry>
+          <mesh filename="package://robco_description/meshes/handeye/d415_mount.stl"/> 
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.006" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="${0.038+safety_distance}"  length="0.012" />
+        </geometry>
+      </collision>
+      <collision>
+        <origin xyz="${0.075/2} 0 0.0055" rpy="0 0 0"/>
+        <geometry>
+          <box size="${0.075+safety_distance} ${0.03+safety_distance} ${0.012+safety_distance}" />
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="${ns}_handeye_flange"></link>
+    <joint name="${ns}_handeye_flange_joint" type="fixed">
+      <parent link="${ns}_handeye"/>
+      <child link="${ns}_handeye_flange"/>
+      <origin xyz="0 0 0.012" rpy="0 0 0"/>
+    </joint>
+
+
+  </xacro:macro>
+</robot>

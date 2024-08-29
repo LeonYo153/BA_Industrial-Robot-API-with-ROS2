@@ -1,0 +1,31 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/yo/robco_ws/install/moveit_task_constructor_visualization/include/**",
+        "/home/yo/robco_ws/install/moveit_task_constructor_demo/include/**",
+        "/home/yo/robco_ws/install/moveit_task_constructor_core/include/**",
+        "/home/yo/robco_ws/install/rviz_marker_tools/include/**",
+        "/home/yo/robco_ws/install/moveit_visual_tools/include/**",
+        "/home/yo/robco_ws/install/moveit_task_constructor_msgs/include/**",
+        "/opt/ros/humble/include/**",
+        "/home/yo/robco_ws/src/moveit_task_constructor/core/include/**",
+        "/home/yo/robco_ws/src/moveit_task_constructor/demo/include/**",
+        "/home/yo/robco_ws/src/moveit_task_constructor/rviz_marker_tools/include/**",
+        "/home/yo/robco_ws/src/moveit_visual_tools/include/**",
+        "/home/yo/robco_ws/src/robco_planning/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

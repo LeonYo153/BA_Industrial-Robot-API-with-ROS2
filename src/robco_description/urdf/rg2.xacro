@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda">
+  <xacro:macro name="hand" params="connected_to:='' ns:='' rpy:='0 0 0' xyz:='0 0 0' safety_distance:=0">
+    <xacro:unless value="${not connected_to}">
+      <joint name="${ns}_hand_joint" type="fixed">
+        <parent link="${connected_to}"/>
+        <child link="${ns}_hand"/>
+        <origin xyz="${xyz}" rpy="${rpy}"/>
+      </joint>
+    </xacro:unless>
+    <link name="${ns}_hand">
+      <visual>
+        <geometry>
+          <mesh filename="package://robco_description/meshes/hand/quick_changer.stl"/> 
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.006" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="${0.038+safety_distance}"  length="0.012" />
+        </geometry>
+      </collision>
+    </link>
+    <link name="${ns}_palm">
+      <visual>
+        <geometry>
+          <mesh filename="package://robco_description/meshes/hand/rg2_palm.stl"/> 
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 ${0.13/2+0.02}" rpy="0 0 0"/>
+        <geometry>
+          <box size="${2*0.018+safety_distance} ${0.036*2+safety_distance} ${0.13+safety_distance}" />
+        </geometry>
+      </collision>
+    </link>
+    <link name="${ns}_left_finger">
+      <visual>
+        <geometry>
+          <mesh filename="package://robco_description/meshes/hand/rg2_leftfinger.stl"/> 
+        </geometry>
+      </visual>
+    </link>
+    <link name="${ns}_right_finger">
+      <visual>
+        <geometry>
+          <mesh filename="package://robco_description/meshes/hand/rg2_rightfinger.stl"/> 
+        </geometry>
+      </visual>
+    </link>
+    <link name="${ns}_left_fingertip">
+      <visual>
+        <geometry>
+          <mesh filename="package://robco_description/meshes/hand/rg2_leftfinger_tip.stl"/> 
+        </geometry>
+      </visual>
+    </link>
+    <link name="${ns}_right_fingertip">
+      <visual>
+        <geometry>
+          <mesh filename="package://robco_description/meshes/hand/rg2_rightfinger_tip.stl"/> 
+        </geometry>
+      </visual>
+    </link>
+    <joint name="${ns}_palmjoint" type="fixed">
+      <parent link="${ns}_hand"/>
+      <child link="${ns}_palm"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <xacro:property name="upper_gripper" value="0.5"/>
+    <xacro:property name="lower_gripper" value="0.77"/>
+    <joint name="${ns}_left_finger_joint" type="revolute">
+      <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="${-lower_gripper}" soft_upper_limit="${upper_gripper}"/>
+      <parent link="${ns}_palm"/>
+      <child link="${ns}_left_finger"/>
+      <origin xyz="0 -0.017 0.123" rpy="0 ${pi/2} 0"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="40" lower="${-lower_gripper}" upper="${upper_gripper}" velocity="3.14"/>
+    </joint>
+    <joint name="${ns}_right_finger_joint" type="revolute">
+      <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="${-upper_gripper}" soft_upper_limit="${lower_gripper}"/>
+      <mimic joint="${ns}_left_finger_joint" multiplier="-1.0"/>
+      <parent link="${ns}_palm"/>
+      <child link="${ns}_right_finger"/>
+      <origin xyz="0 0.017 0.123" rpy="0 ${pi/2} 0"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="40" lower="${-upper_gripper}" upper="${lower_gripper}" velocity="3.14"/>
+    </joint>
+
+    <joint name="${ns}_left_fingertip_joint" type="revolute">
+      <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="${-upper_gripper}" soft_upper_limit="${lower_gripper}"/>
+      <parent link="${ns}_left_finger"/>
+      <child link="${ns}_left_fingertip"/>
+      <origin xyz="-0.0385 -0.03966 0" rpy="0 0 0"/>
+      <axis xyz="0 0 1"/>
+      <mimic joint="${ns}_left_finger_joint" multiplier="-1.0"/>
+      <limit effort="40" lower="${-lower_gripper}" upper="${upper_gripper}" velocity="3.14"/>
+    </joint>
+    <joint name="${ns}_right_fingertip_joint" type="revolute">
+      <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="${-upper_gripper}" soft_upper_limit="${lower_gripper}"/>
+      <parent link="${ns}_right_finger"/>
+      <child link="${ns}_right_fingertip"/>
+      <origin xyz="-0.0385 0.03966 0" rpy="0 0 0"/>
+      <axis xyz="0 0 1"/>
+      <mimic joint="${ns}_right_finger_joint" multiplier="-1.0"/>
+      <limit effort="40" lower="${-upper_gripper}" upper="${lower_gripper}" velocity="3.14"/>
+    </joint>
+
+
+
+    <link name="${ns}_hand_tcp"/>
+    <joint name="${ns}_hand_tcp_joint" type="fixed">
+      <origin xyz="0 0 0.2" rpy="0 0 0"/>
+      <parent link="${ns}_hand"/>
+      <child link="${ns}_hand_tcp"/>
+    </joint>
+  </xacro:macro>
+</robot>

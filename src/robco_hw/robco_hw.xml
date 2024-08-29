@@ -1,0 +1,9 @@
+<library path="robco_hw">
+  <class name="robco_hw/RobcoHardwareInterface"
+         type="robco_hw::RobcoHardwareInterface"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      ros2_control hardware interface.
+    </description>
+  </class>
+</library>
